@@ -1,6 +1,7 @@
 {
     "name": "kematjaya/export",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Nur Hidayatullah",
