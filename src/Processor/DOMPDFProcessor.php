@@ -21,6 +21,7 @@ class DOMPDFProcessor extends PDFProcessor
         $pdf = new Dompdf();
         $pdf->loadHtml($content);
         $pdf->render();
+        // TODO: header already sent
         
         return $pdf->stream($this->getFileName(), [
             "Attachment" => $viewMode === self::ATTACHMENT_VIEW ? false : true
