@@ -1,0 +1,24 @@
+{
+    "name": "kematjaya/export",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Nur Hidayatullah",
+            "email": "kematjaya0@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kematjaya\\Export\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kematjaya\\Kematjaya\\Tests\\": "tests/"
+        }
+    }
+}
