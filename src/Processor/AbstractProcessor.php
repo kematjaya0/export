@@ -2,7 +2,6 @@
 
 namespace Kematjaya\Export\Processor;
 
-use Kematjaya\Export\Paper\ClientPaperInterface;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
