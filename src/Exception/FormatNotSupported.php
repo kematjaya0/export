@@ -7,9 +7,9 @@ namespace Kematjaya\Export\Exception;
  */
 class FormatNotSupported extends \Exception
 {
-    public function __construct(string $message = "", int $code = 0, \Throwable $previous = NULL): \Exception 
+    public function __construct(string $message = "", int $code = 0, \Throwable $previous = NULL) 
     {
-        $message = "format not supported";
+        $message = sprintf("format not supported: %s", $message);
         
         parent::__construct($message, $code, $previous);
     }

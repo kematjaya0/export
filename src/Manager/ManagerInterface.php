@@ -10,5 +10,5 @@ use Kematjaya\Export\Processor\AbstractProcessor;
  */
 interface ManagerInterface 
 {
-    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper);
+    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null);
 }

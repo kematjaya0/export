@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Kematjaya\\Kematjaya\\Tests\\": "tests/"
+            "Kematjaya\\Export\\Tests\\": "tests/"
         }
     }
 }
