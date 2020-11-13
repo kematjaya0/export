@@ -10,5 +10,5 @@ interface ProcessorInterface
     const ATTACHMENT_VIEW = 'view';
     const ATTACHMENT_DOWNLOAD = 'download';
     
-    public function render($data);
+    public function render($data, string $viewMode);
 }

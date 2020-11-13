@@ -21,6 +21,4 @@ abstract class AbstractProcessor implements ProcessorInterface
     }
     
     abstract function isSupported($data):bool;
-    
-    abstract function getFileType():string;
 }

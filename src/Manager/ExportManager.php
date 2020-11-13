@@ -24,7 +24,7 @@ class ExportManager implements ManagerInterface
             $processor->setPaper($paper);
         }
         
-        //lanjut kode belum selesai
+        return $processor->render($data, $mode);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace Kematjaya\Export\Test;
 
+use Kematjaya\Export\Processor\DOMPDFProcessor;
 use Kematjaya\Export\Exception\FormatNotSupported;
 use Kematjaya\Export\Processor\AbstractProcessor;
 use Kematjaya\Export\Manager\ExportManager;

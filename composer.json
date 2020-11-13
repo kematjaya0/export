@@ -8,7 +8,9 @@
             "email": "kematjaya0@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "dompdf/dompdf": "^0.8.6"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.4"
     },
