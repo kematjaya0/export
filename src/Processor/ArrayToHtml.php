@@ -17,23 +17,38 @@ class ArrayToHtml extends ArrayToHtmlProcessor
         return is_array($data);
     }
     
-    public function render($data, string $viewMode)
+    public function render($array, string $viewMode)
     {
-        $out = '<tr>';
-        foreach ($array as $key => $value) {
-            if (!isset($tableHeader)) {
-                $tableHeader =
-                    '<th>' .
-                    implode('</th><th>', array_keys($array)) .
-                    '</th>';
+        if ($array) {
+            $first_key = array_keys($array);
+            $keys = array_keys($array[$first_key[0]]);
+            // start table
+            $html = '<div class="table table-responsive"><table class="tabe table-bordered datatables" width="100%">';
+            // header row
+            $html .= '<thead><tr>';
+            foreach ($keys as $key => $value) {
+                $html .= '<th style="text-align:center">' . htmlspecialchars($value) . '</th>';
             }
-            array_keys($array);
+            $html .= '</tr></thead>';
         
-            $out .= "<td>$value</td>";
+            // data rows
+            $html .= '<tbody>';
+            foreach ($array as $key => $value) {
+                $html .= '<tr>';
+                foreach ($value as $key2 => $value2) {
+                    $html .= '<td>' . htmlspecialchars($value2) . '</td>';
+                }
+                $html .= '</tr>';
+            }
+            $html .= '</tbody>';
         
+            // finish table and return it
+        
+            $html .= '</table></div>';
+        } else {
+            $html = '<div class="table table-responsive"><table class="tabe table-bordered datatables" width="100%"><thead><tr><td></td></tr></thead><tbody></tbody></table></div>';
         }
-        $out .= '</tr>';
     
-        return '<table class="table table-bordered">' . $tableHeader . $out . '</table>';
+        return $html;
     }
 }
