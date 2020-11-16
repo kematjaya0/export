@@ -9,5 +9,8 @@ use Kematjaya\Export\Processor\AbstractProcessor;
  */
 abstract class PDFProcessor extends AbstractProcessor
 {
-    
+    public function getFileType():string
+    {
+        return 'application/pdf';
+    }
 }

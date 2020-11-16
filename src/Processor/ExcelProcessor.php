@@ -9,5 +9,8 @@ use Kematjaya\Export\Processor\AbstractProcessor;
  */
 abstract class ExcelProcessor extends AbstractProcessor
 {
-    
+    public function getFileType():string
+    {
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
 }
