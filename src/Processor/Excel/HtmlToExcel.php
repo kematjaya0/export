@@ -5,7 +5,7 @@
  * @author ardith666 <ardith666@gmail.com> <@13/11/20 16.04>
  */
 
-namespace Kematjaya\Export\Processor;
+namespace Kematjaya\Export\Processor\Excel;
 
 use Kematjaya\Export\Processor\Excel\ExcelProcessor;
 use Ticketpark\HtmlPhpExcel\HtmlPhpExcel;
