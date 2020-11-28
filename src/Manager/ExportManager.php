@@ -35,15 +35,21 @@ class ExportManager implements ManagerInterface
             $processor->setPaper($paper);
         }
         
+        $content = $processor->render($data, $mode);
+        if($content instanceof Response)
+        {
+            return $content;
+        }
+        
         if(!headers_sent() or empty(headers_list()))
         {
             $response = $this->createResponse($processor, $mode);
-            $response->setContent($processor->render($data, $mode));
+            $response->setContent($content);
             
             return $response;
         }
         
-        return $processor->render($data, $mode);
+        return $processor->render($content);
     }
 
 }
