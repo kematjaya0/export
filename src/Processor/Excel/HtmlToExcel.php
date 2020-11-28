@@ -7,7 +7,7 @@
 
 namespace Kematjaya\Export\Processor;
 
-use Kematjaya\Export\Processor\ExcelProcessor;
+use Kematjaya\Export\Processor\Excel\ExcelProcessor;
 use Ticketpark\HtmlPhpExcel\HtmlPhpExcel;
 
 
