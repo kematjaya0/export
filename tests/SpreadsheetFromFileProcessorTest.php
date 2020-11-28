@@ -32,7 +32,8 @@ class SpreadsheetFromFileProcessorTest extends TestCase
         
         $processor->setStartCell('A2');
         
-        $this->assertIsString($processor->render($data, SpreadsheetFromFileProcessor::ATTACHMENT_DOWNLOAD));
+        $response = $processor->render($data, SpreadsheetFromFileProcessor::ATTACHMENT_DOWNLOAD);
+        $this->assertEquals($processor->getFileType(), $response->headers->get('content-type'));
     }
     
     public function testFormatNotSupported()
@@ -56,7 +57,6 @@ class SpreadsheetFromFileProcessorTest extends TestCase
         
         $result = $manager->render($data, $processor);
         $this->assertEquals($processor->getFileType(), $result->headers->get('content-type'));
-        $this->assertFileIsReadable($result->getContent());
     }
     
 }
