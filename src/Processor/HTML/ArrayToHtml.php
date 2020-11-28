@@ -19,37 +19,37 @@ class ArrayToHtml extends ArrayToHtmlProcessor
     
     public function render($array, string $viewMode)
     {
-        if ($array) {
-            $first_key = array_keys($array);
-            $keys = array_keys($array[$first_key[0]]);
-            // start table
-            $html = '<div class="table table-responsive"><table class="tabe table-bordered datatables" width="100%">';
-            // header row
-            $html .= '<thead><tr>';
-            foreach ($keys as $key => $value) {
-                $html .= '<th style="text-align:center">' . htmlspecialchars($value) . '</th>';
-            }
-            $html .= '</tr></thead>';
+        $first_key = array_keys($array);
+        $keys = array_keys($array[$first_key[0]]);
         
-            // data rows
-            $html .= '<tbody>';
-            foreach ($array as $key => $value) {
-                $html .= '<tr>';
-                foreach ($value as $key2 => $value2) {
-                    $html .= '<td>' . htmlspecialchars($value2) . '</td>';
-                }
-                $html .= '</tr>';
-            }
-            $html .= '</tbody>';
-        
-            // finish table and return it
-        
-            $html .= '</table></div>';
-        } else {
-            $html = '<div class="table table-responsive"><table class="tabe table-bordered datatables" width="100%"><thead><tr><td></td></tr></thead><tbody></tbody></table></div>';
+        $rows = [];
+        foreach ($keys as $key => $value) 
+        {
+            $rows[] = '<th style="text-align:center">' . htmlspecialchars($value) . '</th>';
         }
-    
-        return $html;
+        
+        $head = sprintf('<tr>%s</tr>', implode("", $rows));
+        
+        $bodyRows = [];
+        foreach ($array as $key => $value) 
+        {
+            $column = [];
+            foreach ($value as $value2) 
+            {
+                $column[] = '<td>' . htmlspecialchars($value2) . '</td>';
+            }
+            
+            $bodyRows[] = sprintf('<tr>%s</tr>', implode("", $column));
+        }
+        
+        return ''
+        . '<div class="table table-responsive">'
+            . '<table class="table table-bordered datatables" width="100%">'
+                . '<thead>' . $head . '</thead>'
+                . '<tbody>' . implode("", $bodyRows) . '</tbody>'
+            . '</table>'
+        . '</div>';
+        
     }
 
 }

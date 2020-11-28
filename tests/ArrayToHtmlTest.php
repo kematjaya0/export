@@ -17,12 +17,31 @@ class ArrayToHtmlTest extends TestCase
         $this->assertFalse($processor->isSupported('test'));
         
         $data = [
-            ['1233', 'test 1'],
-            ['1234', 'test 2']
+            [
+                'No' => 1,
+                'Nama' => 'test',
+                'Alamat' => 'sby',
+            ],
+            [
+                'No' => 2,
+                'Nama' => 'test',
+                'Alamat' => 'sby',
+            ],
+            [
+                'No' => 3,
+                'Nama' => 'test',
+                'Alamat' => 'sby',
+            ],
+            [
+                'No' => 4,
+                'Nama' => 'test',
+                'Alamat' => 'sby',
+            ],
         ];
-        $this->assertTrue($processor->isSupported($data));
         
-        $this->assertIsString($processor->render($data, ArrayToHtml::ATTACHMENT_DOWNLOAD));
+        $this->assertTrue($processor->isSupported($data));
+        $content = $processor->render($data, ArrayToHtml::ATTACHMENT_DOWNLOAD);
+        $this->assertIsString($content);
     }
     
     public function testFormatNotSupported()

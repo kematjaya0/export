@@ -21,7 +21,7 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
      *
      * @var string
      */
-    private $startCell;
+    private $startCell = 'A1';
     
     public function __construct(string $fileName) 
     {
