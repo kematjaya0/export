@@ -5,9 +5,9 @@
  * @author ardith666 <ardith666@gmail.com> <@16/11/20 09.20>
  */
 
-namespace Kematjaya\Export\Processor;
+namespace Kematjaya\Export\Processor\HTML;
 
-use Kematjaya\Export\Processor\ArrayToHtml;
+use Kematjaya\Export\Processor\HTML\ArrayToHtmlProcessor;
 
 class ArrayToHtml extends ArrayToHtmlProcessor
 {
@@ -51,4 +51,5 @@ class ArrayToHtml extends ArrayToHtmlProcessor
     
         return $html;
     }
+
 }

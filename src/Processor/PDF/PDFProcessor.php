@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\Export\Processor;
+namespace Kematjaya\Export\Processor\PDF;
 
 use Kematjaya\Export\Processor\AbstractProcessor;
 

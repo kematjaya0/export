@@ -1,8 +1,8 @@
 <?php
 
-namespace Kematjaya\Export\Processor;
+namespace Kematjaya\Export\Processor\PDF;
 
-use Kematjaya\Export\Processor\PDFProcessor;
+use Kematjaya\Export\Processor\PDF\PDFProcessor;
 use Dompdf\Dompdf;
 
 /**
