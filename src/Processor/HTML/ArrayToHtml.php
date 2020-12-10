@@ -17,8 +17,20 @@ class ArrayToHtml extends ArrayToHtmlProcessor
         return is_array($data);
     }
     
-    public function render($array, string $viewMode)
+    public function render($array = [], string $viewMode)
     {
+        $html = ''
+        . '<div class="table table-responsive">'
+            . '<table class="table table-bordered datatables">'
+                . '<thead> %s </thead>'
+                . '<tbody> %s </tbody>'
+            . '</table>'
+        . '</div>';
+        
+        if(empty($array)) {
+            return sprintf($html, '', '');
+        }
+        
         $first_key = array_keys($array);
         $keys = array_keys($array[$first_key[0]]);
         
@@ -42,13 +54,7 @@ class ArrayToHtml extends ArrayToHtmlProcessor
             $bodyRows[] = sprintf('<tr>%s</tr>', implode("", $column));
         }
         
-        return ''
-        . '<div class="table table-responsive">'
-            . '<table class="table table-bordered datatables" width="100%">'
-                . '<thead>' . $head . '</thead>'
-                . '<tbody>' . implode("", $bodyRows) . '</tbody>'
-            . '</table>'
-        . '</div>';
+        return sprintf($html, $head, implode("", $bodyRows));
         
     }
 
