@@ -13,6 +13,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ExportManager implements ManagerInterface
 {
+    /**
+     * 
+     * @var AbstractProcessor
+     */
+    private $processor;
+    
+    /**
+     * 
+     * @var PaperInterface
+     */
+    private $paper;
+    
     public function createResponse(AbstractProcessor $processor, string $mode):Response
     {
         $response = new Response();
@@ -23,26 +35,50 @@ class ExportManager implements ManagerInterface
         return $response;
     }
     
+    public function getProcessor(): ?AbstractProcessor
+    {
+        return $this->processor;
+    }
+    
+    public function setProcessor(AbstractProcessor $processor):ManagerInterface
+    {
+        $this->processor = $processor;
+        
+        return $this;
+    }
+    
+    function getPaper() :?PaperInterface
+    {
+        return $this->paper;
+    }
+
+    function setPaper(?PaperInterface $paper): ManagerInterface 
+    {
+        $this->paper = $paper;
+        
+        return $this;
+    }
+
     public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null)
     {
-        if(!$processor->isSupported($data))
-        {
+        $this->setProcessor($processor);
+        
+        $this->setPaper($paper);
+        
+        if(!$processor->isSupported($data)) {
             throw new FormatNotSupported();
         }
         
-        if($processor instanceof ClientPaperInterface)
-        {
+        if(null !== $paper and $processor instanceof ClientPaperInterface) {
             $processor->setPaper($paper);
         }
         
         $content = $processor->render($data, $mode);
-        if($content instanceof Response)
-        {
+        if($content instanceof Response) {
             return $content;
         }
         
-        if(!headers_sent() or empty(headers_list()))
-        {
+        if(!headers_sent() or empty(headers_list())) {
             $response = $this->createResponse($processor, $mode);
             $response->setContent($content);
             

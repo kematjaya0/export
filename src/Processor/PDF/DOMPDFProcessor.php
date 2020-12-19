@@ -19,6 +19,12 @@ class DOMPDFProcessor extends PDFProcessor
     public function render($content, string $viewMode) 
     {
         $pdf = new Dompdf();
+        
+        $paper = $this->getPaper();
+        if($paper) {
+            $pdf->setPaper($paper->getPaperType(), $paper->getOrientation());
+        }
+        
         $pdf->loadHtml($content);
         $pdf->render();
         

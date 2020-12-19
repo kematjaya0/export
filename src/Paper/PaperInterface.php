@@ -17,11 +17,11 @@ interface PaperInterface
     
     public function setOrientation(string $orientation):self;
     
-    public function getOrientation():string;
+    public function getOrientation():?string;
     
     public function setPaperType(string $paperType):self;
     
-    public function getPaperType():string;
+    public function getPaperType():?string;
     
     public function setMargin(string $name, float $value):self;
     

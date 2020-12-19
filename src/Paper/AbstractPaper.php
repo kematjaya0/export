@@ -13,6 +13,18 @@ abstract class AbstractPaper implements PaperInterface
      */
     protected $margins;
     
+    /**
+     * 
+     * @var string
+     */
+    protected $paperType = 'A4';
+    
+    /**
+     * 
+     * @var string
+     */
+    protected $orientation = self::ORIENTATION_PORTRAIT;
+    
     public function __construct() 
     {
         $this->margins = array();
@@ -25,11 +37,10 @@ abstract class AbstractPaper implements PaperInterface
         ];
     }
     
-    protected function marginValidate():bool
+    protected function marginValidate(string $name):bool
     {
         $marginsNames = self::getMarginNames();
-        if(!in_array($name, $marginsNames))
-        {
+        if(!in_array($name, $marginsNames)) {
             throw new Exception(sprintf("key %s not exist for margin", $name));
         }
         
@@ -38,7 +49,7 @@ abstract class AbstractPaper implements PaperInterface
     
     public function setMargin(string $name, float $value):PaperInterface 
     {
-        $this->marginValidate();
+        $this->marginValidate($name);
         
         $this->margins[$name] = $value;
         
@@ -47,7 +58,7 @@ abstract class AbstractPaper implements PaperInterface
     
     public function getMargin(string $name):?float
     {
-        $this->marginValidate();
+        $this->marginValidate($name);
         
         return $this->margins[$name];
     }
@@ -55,5 +66,29 @@ abstract class AbstractPaper implements PaperInterface
     public function getMargins():array
     {
         return $this->margins;
+    }
+    
+    public function getOrientation(): ?string 
+    {
+        return $this->orientation;
+    }
+
+    public function getPaperType(): ?string 
+    {
+        return $this->paperType;
+    }
+
+    public function setOrientation(string $orientation): PaperInterface 
+    {
+        $this->orientation = $orientation;
+        
+        return $this;
+    }
+
+    public function setPaperType(string $paperType): PaperInterface 
+    {
+        $this->paperType = $paperType;
+        
+        return $this;
     }
 }
