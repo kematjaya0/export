@@ -5,7 +5,7 @@ namespace Kematjaya\Export\Paper;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-interface PaperInterface 
+interface PaperInterface
 {
     const ORIENTATION_PORTRAIT ='portrait';
     const ORIENTATION_LANDSCAPE = 'landscape';

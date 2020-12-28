@@ -7,7 +7,7 @@ use Kematjaya\Export\Paper\PaperInterface;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-interface ClientPaperInterface 
+interface ClientPaperInterface
 {
     public function setPaper(PaperInterface $paper):self;
     

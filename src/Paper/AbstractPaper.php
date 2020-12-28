@@ -2,10 +2,12 @@
 
 namespace Kematjaya\Export\Paper;
 
+use Kematjaya\Export\Exception\MarginKeyNotValid;
+
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-abstract class AbstractPaper implements PaperInterface 
+abstract class AbstractPaper implements PaperInterface
 {
     /**
      *
@@ -30,6 +32,11 @@ abstract class AbstractPaper implements PaperInterface
         $this->margins = array();
     }
     
+    /**
+     * Get margin name as array
+     * 
+     * @return array
+     */
     public static function getMarginNames():array
     {
         return [
@@ -37,16 +44,30 @@ abstract class AbstractPaper implements PaperInterface
         ];
     }
     
+    /**
+     * Validate margin name
+     * 
+     * @param  string $name
+     * @return bool
+     * @throws MarginKeyNotValid
+     */
     protected function marginValidate(string $name):bool
     {
         $marginsNames = self::getMarginNames();
         if(!in_array($name, $marginsNames)) {
-            throw new Exception(sprintf("key %s not exist for margin", $name));
+            throw new MarginKeyNotValid($name);
         }
         
         return true;
     }
     
+    /**
+     * Set margin value by name
+     * 
+     * @param  string $name
+     * @param  float  $value
+     * @return PaperInterface
+     */
     public function setMargin(string $name, float $value):PaperInterface 
     {
         $this->marginValidate($name);
@@ -56,6 +77,12 @@ abstract class AbstractPaper implements PaperInterface
         return $this;
     }
     
+    /**
+     * Get margin values by name
+     * 
+     * @param  string $name
+     * @return float|null
+     */
     public function getMargin(string $name):?float
     {
         $this->marginValidate($name);
@@ -63,21 +90,42 @@ abstract class AbstractPaper implements PaperInterface
         return $this->margins[$name];
     }
     
+    /**
+     * Get all margin values
+     * 
+     * @return array
+     */
     public function getMargins():array
     {
         return $this->margins;
     }
     
+    /**
+     * Get paper orientation value
+     * 
+     * @return string|null
+     */
     public function getOrientation(): ?string 
     {
         return $this->orientation;
     }
 
+    /**
+     * Get paper type
+     * 
+     * @return string|null
+     */
     public function getPaperType(): ?string 
     {
         return $this->paperType;
     }
 
+    /**
+     * Set paper orientation
+     * 
+     * @param  string $orientation
+     * @return PaperInterface
+     */
     public function setOrientation(string $orientation): PaperInterface 
     {
         $this->orientation = $orientation;
@@ -85,6 +133,12 @@ abstract class AbstractPaper implements PaperInterface
         return $this;
     }
 
+    /**
+     * Set paper type
+     * 
+     * @param  string $paperType
+     * @return PaperInterface
+     */
     public function setPaperType(string $paperType): PaperInterface 
     {
         $this->paperType = $paperType;

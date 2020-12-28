@@ -9,6 +9,8 @@ use Kematjaya\Export\Paper\ClientPaperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class for exporting data to document
+ * 
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class ExportManager implements ManagerInterface
@@ -25,6 +27,13 @@ class ExportManager implements ManagerInterface
      */
     private $paper;
     
+    /**
+     * Creating response object
+     * 
+     * @param  AbstractProcessor $processor
+     * @param  string            $mode
+     * @return Response
+     */
     public function createResponse(AbstractProcessor $processor, string $mode):Response
     {
         $response = new Response();
@@ -35,11 +44,22 @@ class ExportManager implements ManagerInterface
         return $response;
     }
     
+    /**
+     * Get processor object
+     * 
+     * @return AbstractProcessor|null
+     */
     public function getProcessor(): ?AbstractProcessor
     {
         return $this->processor;
     }
     
+    /**
+     * Set processor object
+     * 
+     * @param  AbstractProcessor $processor
+     * @return ManagerInterface
+     */
     public function setProcessor(AbstractProcessor $processor):ManagerInterface
     {
         $this->processor = $processor;
@@ -47,11 +67,22 @@ class ExportManager implements ManagerInterface
         return $this;
     }
     
+    /**
+     * Get PaperInterface object
+     *
+     * @return PaperInterface|null
+     */
     function getPaper() :?PaperInterface
     {
         return $this->paper;
     }
 
+    /**
+     * Set PaperInterface object
+     * 
+     * @param  PaperInterface|null $paper
+     * @return ManagerInterface
+     */
     function setPaper(?PaperInterface $paper): ManagerInterface 
     {
         $this->paper = $paper;
@@ -59,12 +90,19 @@ class ExportManager implements ManagerInterface
         return $this;
     }
 
+    /**
+     * Render data to document format
+     * 
+     * @param  mixed             $data
+     * @param  AbstractProcessor $processor
+     * @param  string            $mode
+     * @param  PaperInterface    $paper
+     * @throws FormatNotSupported if formt not supported
+     */
     public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null)
     {
         $this->setProcessor($processor);
-        
         $this->setPaper($paper);
-        
         if(!$processor->isSupported($data)) {
             throw new FormatNotSupported();
         }

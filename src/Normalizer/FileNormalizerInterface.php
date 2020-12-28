@@ -7,7 +7,8 @@ use SplFileInfo;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-interface FileNormalizerInterface {
+interface FileNormalizerInterface
+{
     
     public function normalize(SplFileInfo $object):string;
     
