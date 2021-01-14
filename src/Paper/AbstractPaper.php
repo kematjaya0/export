@@ -111,11 +111,9 @@ abstract class AbstractPaper implements PaperInterface
     }
 
     /**
-     * Get paper type
-     * 
-     * @return string|null
+     * @param null|string|array $paperSize
      */
-    public function getPaperType(): ?string 
+    public function getPaperType() 
     {
         return $this->paperType;
     }
@@ -134,12 +132,12 @@ abstract class AbstractPaper implements PaperInterface
     }
 
     /**
-     * Set paper type
-     * 
-     * @param  string $paperType
-     * @return PaperInterface
+     * Sets the paper size & orientation
+     *
+     * @param string|array $paperType 'letter', 'legal', 'A4', etc.
+     * @return $this
      */
-    public function setPaperType(string $paperType): PaperInterface 
+    public function setPaperType($paperType): PaperInterface 
     {
         $this->paperType = $paperType;
         

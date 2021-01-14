@@ -19,9 +19,18 @@ interface PaperInterface
     
     public function getOrientation():?string;
     
-    public function setPaperType(string $paperType):self;
+    /**
+     * Sets the paper size & orientation
+     *
+     * @param string|array $paperType 'letter', 'legal', 'A4', etc.
+     * @return $this
+     */
+    public function setPaperType($paperType):self;
     
-    public function getPaperType():?string;
+    /**
+     * @param null|string|array $paperSize
+     */
+    public function getPaperType();
     
     public function setMargin(string $name, float $value):self;
     
