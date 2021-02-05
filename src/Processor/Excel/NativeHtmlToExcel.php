@@ -25,17 +25,24 @@ class NativeHtmlToExcel extends ExcelProcessor
 
     public function render($data, string $viewMode) 
     {
-        $crawler = new Crawler($data);
-        $excel = sprintf('<table border="1">%s</table>', $crawler->filter('table')->html());
+        $excel = $this->createTableHTML($data);
         
         return $this->createResponse($excel, $viewMode);
     }
 
+    protected function createTableHTML(string $data)
+    {
+        $crawler = new Crawler($data);
+        
+        return sprintf('<table border="1">%s</table>', $crawler->filter('table')->html());
+    }
+    
     protected function createResponse(string $content, string $viewMode = self::ATTACHMENT_VIEW): Response
     {
         $response = new Response($content);
         $response->headers->set('Content-type', 'application/vnd-ms-excel');
         $response->headers->set('Content-Disposition', HeaderUtils::makeDisposition($viewMode, $this->getFileName()));
+        
         return $response;
     }
 }
