@@ -40,7 +40,7 @@ class NativeHtmlToExcel extends ExcelProcessor
     protected function createResponse(string $content, string $viewMode = self::ATTACHMENT_VIEW): Response
     {
         $response = new Response($content);
-        $response->headers->set('Content-type', 'application/vnd-ms-excel');
+        $response->headers->set('Content-type', 'application/vnd.ms-excel');
         $response->headers->set('Content-Disposition', HeaderUtils::makeDisposition($viewMode, $this->getFileName()));
         
         return $response;
