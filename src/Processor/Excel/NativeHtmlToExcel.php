@@ -33,8 +33,12 @@ class NativeHtmlToExcel extends ExcelProcessor
     protected function createTableHTML(string $data)
     {
         $crawler = new Crawler($data);
+        $html = $crawler->filter('table')->each(function (Crawler $dom){
+            
+            return sprintf('<table border="1">%s</table>', $dom->html());
+        });
         
-        return sprintf('<table border="1">%s</table>', $crawler->filter('table')->html());
+        return implode($html);
     }
     
     protected function createResponse(string $content, string $viewMode = self::ATTACHMENT_VIEW): Response
