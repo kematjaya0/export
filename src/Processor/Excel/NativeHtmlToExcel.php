@@ -37,8 +37,9 @@ class NativeHtmlToExcel extends ExcelProcessor
             
             return sprintf('<table border="1">%s</table>', $dom->html());
         });
+        $separator = '<table><tr><td></td></tr></table><table><tr><td></td></tr></table><table><tr><td></td></tr></table>';
         
-        return implode($html);
+        return implode($separator, $html);
     }
     
     protected function createResponse(string $content, string $viewMode = self::ATTACHMENT_VIEW): Response
