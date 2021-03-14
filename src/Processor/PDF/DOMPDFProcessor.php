@@ -31,13 +31,18 @@ class DOMPDFProcessor extends PDFProcessor
      * @return string PDF document as string
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($content, string $viewMode) 
+    public function render($content, string $viewMode, callable $callable = null) 
     {
         $pdf = new Dompdf();
         
         $paper = $this->getPaper();
         if($paper) {
             $pdf->setPaper($paper->getPaperType(), $paper->getOrientation());
+        }
+        
+        if ($callable) {
+            
+            call_user_func($callable, $this, $content, $pdf, $paper, $viewMode);
         }
         
         $pdf->loadHtml($content);

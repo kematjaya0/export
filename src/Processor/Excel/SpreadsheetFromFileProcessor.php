@@ -49,13 +49,18 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
      * @param  string $viewMode
      * @return Response spreadsheet file response
      */
-    public function render($data, string $viewMode) : Response
+    public function render($data, string $viewMode, callable $callable = null) : Response
     {
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($this->getFileName());
         $spreadsheet
             ->getActiveSheet()
             ->fromArray($data, null, $this->getStartCell());
+        
+        if ($callable) {
+            
+            call_user_func($callable, $this, $data, $viewMode, $spreadsheet);
+        }
         
         $filePaths = explode(DIRECTORY_SEPARATOR, $this->getFileName());
         $fileName = end($filePaths);

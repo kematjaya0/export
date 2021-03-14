@@ -27,11 +27,11 @@ class KoolReportToExcel extends NativeHtmlToExcel
         return ($data instanceof \koolreport\KoolReport);
     }
 
-    public function render($data, string $viewMode) 
+    public function render($data, string $viewMode, callable $callable = null) 
     {
         $data = $this->renderHTML($data);
         
-        return parent::render($data, $viewMode);
+        return parent::render($data, $viewMode, $callable);
     }
 
     protected function renderHTML(\koolreport\KoolReport $report):string

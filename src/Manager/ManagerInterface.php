@@ -43,5 +43,5 @@ interface ManagerInterface
      * @param string            $mode
      * @param PaperInterface    $paper
      */
-    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null);
+    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null, callable $callable = null);
 }

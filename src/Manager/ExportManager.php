@@ -99,31 +99,33 @@ class ExportManager implements ManagerInterface
      * @param  PaperInterface    $paper
      * @throws FormatNotSupported if formt not supported
      */
-    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null)
+    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null, callable $callable = null)
     {
         $this->setProcessor($processor);
         $this->setPaper($paper);
-        if(!$processor->isSupported($data)) {
+        if (!$processor->isSupported($data)) {
+            
             throw new FormatNotSupported();
         }
         
-        if(null !== $paper and $processor instanceof ClientPaperInterface) {
+        if (null !== $paper and $processor instanceof ClientPaperInterface) {
             $processor->setPaper($paper);
         }
         
-        $content = $processor->render($data, $mode);
-        if($content instanceof Response) {
+        $content = $processor->render($data, $mode, $callable);
+        if ($content instanceof Response) {
+            
             return $content;
         }
         
-        if(!headers_sent() or empty(headers_list())) {
+        if (!headers_sent() or empty(headers_list())) {
             $response = $this->createResponse($processor, $mode);
             $response->setContent($content);
             
             return $response;
         }
         
-        return $processor->render($content);
+        return $processor->render($content, $mode, $callable);
     }
 
 }

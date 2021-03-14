@@ -33,7 +33,7 @@ class ArrayToHtml extends ArrayToHtmlProcessor
      * @param array  $array
      * @param string $viewMode
      */
-    public function render($array = [], string $viewMode)
+    public function render($array = [], string $viewMode, callable $callable = null)
     {
         $html = ''
         . '<div class="table table-responsive">'
@@ -66,6 +66,11 @@ class ArrayToHtml extends ArrayToHtmlProcessor
             }
             
             $bodyRows[] = sprintf('<tr>%s</tr>', implode("", $column));
+        }
+        
+        if ($callable) {
+            
+            call_user_func($callable, $this, $array, $html, $viewMode);
         }
         
         return sprintf($html, $head, implode("", $bodyRows));

@@ -46,9 +46,13 @@ class HtmlToExcel extends ExcelProcessor
      * @param  string $viewMode
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($data, string $viewMode)
+    public function render($data, string $viewMode, callable $callable = null)
     {
         $excel = new \Ticketpark\HtmlPhpExcel\HtmlPhpExcel($data);
+        if ($callable) {
+            
+            call_user_func($callable, $this, $data, $viewMode);
+        }
         
         switch ($viewMode) {
         case self::ATTACHMENT_SAVE_TO_DIR:

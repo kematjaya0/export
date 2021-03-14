@@ -23,11 +23,16 @@ class SpreadsheetFromArrayProcessor extends PHPSpreadsheetProcessor
         return is_array($data);
     }
 
-    public function render($data, string $viewMode) 
+    public function render($data, string $viewMode, callable $callable = null) 
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getActiveSheet()
                 ->fromArray($data, null, $this->getStartCell());
+        
+        if ($callable) {
+            
+            call_user_func($callable, $this, $data, $viewMode, $spreadsheet);
+        }
         
         return $this->buildWriter($spreadsheet);
     }
