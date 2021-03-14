@@ -13,6 +13,35 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class PHPSpreadsheetProcessor extends ExcelProcessor
 {
+    
+    /**
+     *
+     * @var string
+     */
+    private $startCell = 'A1';
+    
+    /**
+     * Set start cell reading data
+     * 
+     * @param  string $startCell
+     * @return self
+     */
+    public function setStartCell(string $startCell):self
+    {
+        $this->startCell = $startCell;
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @return string|null
+     */
+    public function getStartCell():?string
+    {
+        return $this->startCell;
+    }
+    
     /**
      * Writing spreadsheet object to temporary file and return respose object
      * 
@@ -23,7 +52,7 @@ abstract class PHPSpreadsheetProcessor extends ExcelProcessor
     protected function buildWriter(Spreadsheet $spreadsheet, string $fileName = null): Response
     {
         $writer = new Xlsx($spreadsheet);
-        $tempFile = tempnam(sys_get_temp_dir(), $fileName);
+        $tempFile = tempnam(sys_get_temp_dir(), $fileName ? $fileName : $this->getFileName());
         $writer->save($tempFile);
         
         $response = new BinaryFileResponse($tempFile);

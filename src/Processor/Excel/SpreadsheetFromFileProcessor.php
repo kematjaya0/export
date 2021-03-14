@@ -20,11 +20,6 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
      */
     private $fileSystem;
     
-    /**
-     *
-     * @var string
-     */
-    private $startCell = 'A1';
     
     public function __construct(string $fileName) 
     {
@@ -46,19 +41,6 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
     {
         return is_array($data);
     }
-    
-    /**
-     * Set start cell reading data
-     * 
-     * @param  string $startCell
-     * @return self
-     */
-    public function setStartCell(string $startCell):self
-    {
-        $this->startCell = $startCell;
-        
-        return $this;
-    }
 
     /**
      * Rendering array data to template spreadsheet document
@@ -73,7 +55,7 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
         $spreadsheet = $reader->load($this->getFileName());
         $spreadsheet
             ->getActiveSheet()
-            ->fromArray($data, null, $this->startCell);
+            ->fromArray($data, null, $this->getStartCell());
         
         $filePaths = explode(DIRECTORY_SEPARATOR, $this->getFileName());
         $fileName = end($filePaths);
