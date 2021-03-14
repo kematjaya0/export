@@ -51,12 +51,13 @@ abstract class PHPSpreadsheetProcessor extends ExcelProcessor
      */
     protected function buildWriter(Spreadsheet $spreadsheet, string $fileName = null): Response
     {
+        $targetFile = $fileName ? $fileName : $this->getFileName();
         $writer = new Xlsx($spreadsheet);
-        $tempFile = tempnam(sys_get_temp_dir(), $fileName ? $fileName : $this->getFileName());
+        $tempFile = tempnam(sys_get_temp_dir(), $targetFile);
         $writer->save($tempFile);
         
         $response = new BinaryFileResponse($tempFile);
-        $response->setContentDisposition(self::ATTACHMENT_DOWNLOAD, null === $fileName ? $response->getFile()->getFilename() : $fileName);
+        $response->setContentDisposition(self::ATTACHMENT_DOWNLOAD, $targetFile);
         $response->headers->set('Content-Type', $this->getFileType());
         
         return $response;
