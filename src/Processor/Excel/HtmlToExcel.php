@@ -10,7 +10,6 @@ namespace Kematjaya\Export\Processor\Excel;
 
 use Kematjaya\Export\Exception\ViewModeNotSupported;
 use Kematjaya\Export\Processor\Excel\ExcelProcessor;
-use Ticketpark\HtmlPhpExcel\HtmlPhpExcel;
 
 /**
  * Class for process from string to spreadsheet document, base on Ticketpark\HtmlPhpExcel\HtmlPhpExcel
@@ -18,6 +17,16 @@ use Ticketpark\HtmlPhpExcel\HtmlPhpExcel;
 class HtmlToExcel extends ExcelProcessor
 {
     const ATTACHMENT_SAVE_TO_DIR = 'save_to_dir';
+    
+    public function __construct(string $fileName = null) 
+    {
+        $class = "Ticketpark\HtmlPhpExcel\HtmlPhpExcel";
+        if (!class_exists($class)) {
+            throw new \Exception(sprintf("class %s not found, try run '%s'", $class, 'composer req ticketpark/htmlphpexcel'));
+        }
+        
+        parent::__construct($fileName);
+    }
     
     /**
      * Check supported data
@@ -37,9 +46,13 @@ class HtmlToExcel extends ExcelProcessor
      * @param  string $viewMode
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($data, string $viewMode)
+    public function render($data, string $viewMode, callable $callable = null)
     {
-        $excel = new HtmlPhpExcel($data);
+        $excel = new \Ticketpark\HtmlPhpExcel\HtmlPhpExcel($data);
+        if ($callable) {
+            
+            call_user_func($callable, $this, $data, $viewMode);
+        }
         
         switch ($viewMode) {
         case self::ATTACHMENT_SAVE_TO_DIR:

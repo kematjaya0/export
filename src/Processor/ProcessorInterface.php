@@ -20,5 +20,5 @@ interface ProcessorInterface
      * @param type   $data
      * @param string $viewMode
      */
-    public function render($data, string $viewMode);
+    public function render($data, string $viewMode, callable $callable = null);
 }
