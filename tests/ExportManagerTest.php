@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\Export\Test;
+namespace Kematjaya\Export\Tests;
 
 use Kematjaya\Export\Exception\FormatNotSupported;
 use Kematjaya\Export\Processor\AbstractProcessor;

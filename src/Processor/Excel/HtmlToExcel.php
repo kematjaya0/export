@@ -18,13 +18,8 @@ class HtmlToExcel extends ExcelProcessor
 {
     const ATTACHMENT_SAVE_TO_DIR = 'save_to_dir';
     
-    public function __construct(string $fileName = null) 
+    public function __construct(string $fileName = null)
     {
-        $class = "Ticketpark\HtmlPhpExcel\HtmlPhpExcel";
-        if (!class_exists($class)) {
-            throw new \Exception(sprintf("class %s not found, try run '%s'", $class, 'composer req ticketpark/htmlphpexcel'));
-        }
-        
         parent::__construct($fileName);
     }
     
@@ -36,6 +31,11 @@ class HtmlToExcel extends ExcelProcessor
      */
     function isSupported($data): bool
     {
+        $class = "Ticketpark\HtmlPhpExcel\HtmlPhpExcel";
+        if (!class_exists($class)) {
+            return false;
+        }
+        
         return is_string($data);
     }
     

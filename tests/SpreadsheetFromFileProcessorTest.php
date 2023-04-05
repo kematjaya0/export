@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\Export\Test;
+namespace Kematjaya\Export\Tests;
 
 use Kematjaya\Export\Exception\FormatNotSupported;
 use Kematjaya\Export\Manager\ExportManager;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class SpreadsheetFromFileProcessorTest extends TestCase 
+class SpreadsheetFromFileProcessorTest extends TestCase
 {
     public function testCreateException()
     {

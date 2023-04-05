@@ -1,9 +1,5 @@
 <?php
 
-/**
- * This file is part of the export.
- */
-
 namespace Kematjaya\Export\Processor\Excel;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -18,12 +14,12 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class SpreadsheetFromArrayProcessor extends PHPSpreadsheetProcessor
 {
     
-    public function isSupported($data): bool 
+    public function isSupported($data): bool
     {
         return is_array($data);
     }
 
-    public function render($data, string $viewMode, callable $callable = null) 
+    public function render($data, string $viewMode, callable $callable = null)
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getActiveSheet()

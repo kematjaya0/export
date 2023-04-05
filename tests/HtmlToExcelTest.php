@@ -1,10 +1,6 @@
 <?php
 
-/**
- * This file is part of the export.
- */
-
-namespace Kematjaya\Export\Test;
+namespace Kematjaya\Export\Tests;
 
 use Kematjaya\Export\Processor\Excel\HtmlToExcel;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +14,7 @@ class HtmlToExcelTest extends TestCase
 {
     public function testException()
     {
-        $this->expectException(\Exception::class);
         $excel = new HtmlToExcel();
+        $this->assertFalse($excel->isSupported([]));
     }
 }

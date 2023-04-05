@@ -1,11 +1,12 @@
 <?php
 
-namespace Kematjaya\Export\Test;
+namespace Kematjaya\Export\Tests;
 
 use Kematjaya\Export\Exception\FormatNotSupported;
 use Kematjaya\Export\Manager\ExportManager;
 use Kematjaya\Export\Processor\HTML\ArrayToHtml;
 use PHPUnit\Framework\TestCase;
+
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * This file is part of the export.
- */
-
 namespace Kematjaya\Export\Processor\Excel;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +14,12 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 class NativeHtmlToExcel extends ExcelProcessor
 {
     
-    public function isSupported($data): bool 
+    public function isSupported($data): bool
     {
         return is_string($data);
     }
 
-    public function render($data, string $viewMode, callable $callable = null) 
+    public function render($data, string $viewMode, callable $callable = null)
     {
         $excel = $this->createTableHTML($data);
         if ($callable) {

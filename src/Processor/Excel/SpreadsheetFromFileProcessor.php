@@ -21,7 +21,7 @@ class SpreadsheetFromFileProcessor extends PHPSpreadsheetProcessor
     private $fileSystem;
     
     
-    public function __construct(string $fileName) 
+    public function __construct(string $fileName)
     {
         $this->fileSystem = new Filesystem();
         if(!$this->fileSystem->exists($fileName)) {

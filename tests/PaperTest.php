@@ -1,6 +1,6 @@
 <?php
 
-namespace Kematjaya\Export\Test;
+namespace Kematjaya\Export\Tests;
 
 use Kematjaya\Export\Processor\PDF\DOMPDFProcessor;
 use Kematjaya\Export\Manager\ExportManager;
