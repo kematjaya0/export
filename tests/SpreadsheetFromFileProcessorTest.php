@@ -16,7 +16,7 @@ class SpreadsheetFromFileProcessorTest extends TestCase
     public function testCreateException()
     {
         $this->expectException(FileNotFoundException::class);
-        $processor = new SpreadsheetFromFileProcessor('test.xlsx');
+        $processor = new SpreadsheetFromFileProcessor('tests.xlsx');
     }
     
     public function testInsertData()

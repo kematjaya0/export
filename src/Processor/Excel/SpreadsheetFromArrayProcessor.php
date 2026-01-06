@@ -19,7 +19,7 @@ class SpreadsheetFromArrayProcessor extends PHPSpreadsheetProcessor
         return is_array($data);
     }
 
-    public function render($data, string $viewMode, callable $callable = null)
+    public function render(mixed $data, string $viewMode, ?callable $callable = null)
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getActiveSheet()

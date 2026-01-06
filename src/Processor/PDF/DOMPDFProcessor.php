@@ -31,7 +31,7 @@ class DOMPDFProcessor extends PDFProcessor
      * @return string PDF document as string
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($content, string $viewMode, callable $callable = null) 
+    public function render(mixed $content, string $viewMode, ?callable $callable = null)
     {
         $pdf = new Dompdf();
         

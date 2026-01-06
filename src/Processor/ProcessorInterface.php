@@ -13,12 +13,6 @@ interface ProcessorInterface
 {
     const ATTACHMENT_VIEW = ResponseHeaderBag::DISPOSITION_INLINE;
     const ATTACHMENT_DOWNLOAD = ResponseHeaderBag::DISPOSITION_ATTACHMENT;
-    
-    /**
-     * Rendering data to document
-     * 
-     * @param type   $data
-     * @param string $viewMode
-     */
-    public function render($data, string $viewMode, callable $callable = null);
+
+    public function render(mixed $data, string $viewMode, ?callable $callable = null);
 }

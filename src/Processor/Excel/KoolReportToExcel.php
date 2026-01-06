@@ -9,7 +9,7 @@ namespace Kematjaya\Export\Processor\Excel;
  */
 class KoolReportToExcel extends NativeHtmlToExcel
 {
-    public function __construct(string $fileName = null) 
+    public function __construct(?string $fileName = null)
     {
         if (!class_exists('koolreport\KoolReport')) {
             throw new \Exception(sprintf('class "%s" not found, try running "%s"', 'koolreport\KoolReport', 'koolreport/core'));
@@ -23,7 +23,7 @@ class KoolReportToExcel extends NativeHtmlToExcel
         return ($data instanceof \koolreport\KoolReport);
     }
 
-    public function render($data, string $viewMode, callable $callable = null) 
+    public function render(mixed $data, string $viewMode, ?callable $callable = null)
     {
         $data = $this->renderHTML($data);
         

@@ -26,14 +26,8 @@ class ArrayToHtml extends ArrayToHtmlProcessor
     {
         return is_array($data);
     }
-    
-    /**
-     * Rendering data to html string
-     * 
-     * @param array  $array
-     * @param string $viewMode
-     */
-    public function render($array = [], string $viewMode, callable $callable = null)
+
+    public function render(mixed $array, string $viewMode, callable $callable = null)
     {
         $html = ''
         . '<div class="table table-responsive">'

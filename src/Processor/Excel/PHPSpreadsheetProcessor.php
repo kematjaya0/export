@@ -49,7 +49,7 @@ abstract class PHPSpreadsheetProcessor extends ExcelProcessor
      * @param  string      $fileName
      * @return Response
      */
-    protected function buildWriter(Spreadsheet $spreadsheet, string $fileName = null): Response
+    protected function buildWriter(Spreadsheet $spreadsheet, ?string $fileName = null): Response
     {
         $targetFile = $fileName ? $fileName : $this->getFileName();
         $writer = new Xlsx($spreadsheet);

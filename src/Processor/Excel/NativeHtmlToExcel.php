@@ -19,7 +19,7 @@ class NativeHtmlToExcel extends ExcelProcessor
         return is_string($data);
     }
 
-    public function render($data, string $viewMode, callable $callable = null)
+    public function render(mixed $data, string $viewMode, ?callable $callable = null)
     {
         $excel = $this->createTableHTML($data);
         if ($callable) {

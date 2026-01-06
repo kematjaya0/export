@@ -4,6 +4,7 @@ namespace Kematjaya\Export\Normalizer;
 
 use SplFileInfo;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Class for normalizer file to base64 format
@@ -12,11 +13,7 @@ use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
  */
 class FileNormalizer implements FileNormalizerInterface
 {
-    /**
-     * 
-     * @var NormalizerInterface
-     */
-    private $normalizer;
+    private NormalizerInterface $normalizer;
     
     
     /**

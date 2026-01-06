@@ -15,17 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ExportManager implements ManagerInterface
 {
-    /**
-     * 
-     * @var AbstractProcessor
-     */
-    private $processor;
+    private AbstractProcessor $processor;
     
-    /**
-     * 
-     * @var PaperInterface
-     */
-    private $paper;
+    private PaperInterface $paper;
     
     /**
      * Creating response object
@@ -83,7 +75,7 @@ class ExportManager implements ManagerInterface
      * @param  PaperInterface|null $paper
      * @return ManagerInterface
      */
-    function setPaper(?PaperInterface $paper): ManagerInterface 
+    function setPaper(?PaperInterface $paper): ManagerInterface
     {
         $this->paper = $paper;
         
@@ -99,10 +91,9 @@ class ExportManager implements ManagerInterface
      * @param  PaperInterface    $paper
      * @throws FormatNotSupported if formt not supported
      */
-    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null, callable $callable = null)
+    public function render(mixed $data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, ?PaperInterface $paper = null, ?callable $callable = null)
     {
         $this->setProcessor($processor);
-        $this->setPaper($paper);
         if (!$processor->isSupported($data)) {
             
             throw new FormatNotSupported();

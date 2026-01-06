@@ -46,7 +46,7 @@ class HtmlToExcel extends ExcelProcessor
      * @param  string $viewMode
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($data, string $viewMode, callable $callable = null)
+    public function render(mixed $data, string $viewMode, ?callable $callable = null)
     {
         $excel = new \Ticketpark\HtmlPhpExcel\HtmlPhpExcel($data);
         if ($callable) {

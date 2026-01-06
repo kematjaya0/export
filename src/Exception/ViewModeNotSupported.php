@@ -15,7 +15,7 @@ use Exception;
  */
 class ViewModeNotSupported extends Exception
 {
-    public function __construct(string $viewMode, int $code = 0, \Throwable $previous = null) 
+    public function __construct(string $viewMode, int $code = 0, ?\Throwable $previous = null)
     {
         $message = sprintf("view mode %s not supported", $viewMode);
         parent::__construct($message, $code, $previous);

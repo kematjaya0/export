@@ -20,7 +20,7 @@ abstract class AbstractProcessor implements ProcessorInterface
      * 
      * @param string $fileName
      */
-    public function __construct(string $fileName = null) 
+    public function __construct(?string $fileName = null)
     {
         $this->fileName = $fileName;
     }
