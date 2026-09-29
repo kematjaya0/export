@@ -49,4 +49,19 @@ class PaperTest extends TestCase
         $this->assertInstanceOf(DOMPDFProcessor::class, $manager->getProcessor());
         $this->assertInstanceOf(PaperInterface::class, $processor->getPaper());
     }
+
+    public function testGetMarginNotSet()
+    {
+        $paper = new Paper();
+        $this->assertNull($paper->getMargin(Paper::MARGIN_TOP));
+
+        $paper->setMargin(Paper::MARGIN_TOP, 2.5);
+        $this->assertSame(2.5, $paper->getMargin(Paper::MARGIN_TOP));
+    }
+
+    public function testInvalidMargin()
+    {
+        $this->expectException(\Kematjaya\Export\Exception\MarginKeyNotValid::class);
+        (new Paper())->setMargin('center', 1);
+    }
 }

@@ -38,7 +38,8 @@ class ExportManager implements ManagerInterface
     {
         $response = new Response();
         $response->headers->set('Content-Type', $processor->getFileType());
-        $response->headers->set('Content-Disposition', sprintf('%s;filename="%s"', $mode, $processor->getFileName()));
+        $fileName = $processor->getFileName();
+        $response->headers->set('Content-Disposition', $fileName ? sprintf('%s;filename="%s"', $mode, str_replace('"', '\\"', $fileName)) : $mode);
         $response->headers->set('Cache-Control', 'max-age=1');
         
         return $response;
@@ -99,7 +100,7 @@ class ExportManager implements ManagerInterface
      * @param  PaperInterface    $paper
      * @throws FormatNotSupported if formt not supported
      */
-    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, PaperInterface $paper = null, callable $callable = null)
+    public function render($data, AbstractProcessor $processor, string $mode = AbstractProcessor::ATTACHMENT_DOWNLOAD, ?PaperInterface $paper = null, ?callable $callable = null)
     {
         $this->setProcessor($processor);
         $this->setPaper($paper);
@@ -118,14 +119,10 @@ class ExportManager implements ManagerInterface
             return $content;
         }
         
-        if (!headers_sent() or empty(headers_list())) {
-            $response = $this->createResponse($processor, $mode);
-            $response->setContent($content);
-            
-            return $response;
-        }
+        $response = $this->createResponse($processor, $mode);
+        $response->setContent(null === $content ? null : (string) $content);
         
-        return $processor->render($content, $mode, $callable);
+        return $response;
     }
 
 }

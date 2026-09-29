@@ -19,7 +19,7 @@ class SpreadsheetFromArrayProcessor extends PHPSpreadsheetProcessor
         return is_array($data);
     }
 
-    public function render($data, string $viewMode, callable $callable = null)
+    public function render($data, string $viewMode, ?callable $callable = null)
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getActiveSheet()
@@ -30,7 +30,7 @@ class SpreadsheetFromArrayProcessor extends PHPSpreadsheetProcessor
             call_user_func($callable, $this, $data, $viewMode, $spreadsheet);
         }
         
-        return $this->buildWriter($spreadsheet);
+        return $this->buildWriter($spreadsheet, null, $viewMode);
     }
 
 }

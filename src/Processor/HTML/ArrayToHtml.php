@@ -33,7 +33,7 @@ class ArrayToHtml extends ArrayToHtmlProcessor
      * @param array  $array
      * @param string $viewMode
      */
-    public function render($array = [], string $viewMode, callable $callable = null)
+    public function render($array, string $viewMode, ?callable $callable = null)
     {
         $html = ''
         . '<div class="table table-responsive">'
@@ -48,12 +48,11 @@ class ArrayToHtml extends ArrayToHtmlProcessor
             return sprintf($html, '', '');
         }
         
-        $first_key = array_keys($array);
-        $keys = array_keys($array[$first_key[0]]);
+        $keys = array_keys((array) reset($array));
         
         $rows = [];
         foreach ($keys as $key => $value) {
-            $rows[] = '<th style="text-align:center">' . htmlspecialchars($value) . '</th>';
+            $rows[] = '<th style="text-align:center">' . $this->escape($value) . '</th>';
         }
         
         $head = sprintf('<tr>%s</tr>', implode("", $rows));
@@ -61,8 +60,8 @@ class ArrayToHtml extends ArrayToHtmlProcessor
         $bodyRows = [];
         foreach ($array as $key => $value) {
             $column = [];
-            foreach ($value as $value2) {
-                $column[] = '<td>' . htmlspecialchars($value2) . '</td>';
+            foreach ((array) $value as $value2) {
+                $column[] = '<td>' . $this->escape($value2) . '</td>';
             }
             
             $bodyRows[] = sprintf('<tr>%s</tr>', implode("", $column));
@@ -74,6 +73,29 @@ class ArrayToHtml extends ArrayToHtmlProcessor
         }
         
         return sprintf($html, $head, implode("", $bodyRows));
+    }
+    
+    /**
+     * Convert cell value to escaped string
+     * 
+     * @param  mixed $value
+     * @return string
+     */
+    protected function escape($value):string
+    {
+        if ($value instanceof \DateTimeInterface) {
+            $value = $value->format('Y-m-d H:i:s');
+        } elseif (is_bool($value)) {
+            $value = $value ? '1' : '0';
+        } elseif (is_array($value)) {
+            $value = implode(', ', array_map([$this, 'escape'], $value));
+            
+            return $value;
+        } elseif (is_object($value) && !method_exists($value, '__toString')) {
+            $value = get_class($value);
+        }
+        
+        return htmlspecialchars((string) $value);
     }
 
 }

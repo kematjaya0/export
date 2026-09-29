@@ -21,4 +21,14 @@ abstract class ExcelProcessor extends AbstractProcessor
     {
         return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
+    
+    /**
+     * Get output filename, default "export.xlsx"
+     * 
+     * @return string|null
+     */
+    public function getFileName():?string
+    {
+        return parent::getFileName() ?: 'export.xlsx';
+    }
 }

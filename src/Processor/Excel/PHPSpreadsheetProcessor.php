@@ -47,17 +47,19 @@ abstract class PHPSpreadsheetProcessor extends ExcelProcessor
      * 
      * @param  Spreadsheet $spreadsheet
      * @param  string      $fileName
+     * @param  string      $viewMode
      * @return Response
      */
-    protected function buildWriter(Spreadsheet $spreadsheet, string $fileName = null): Response
+    protected function buildWriter(Spreadsheet $spreadsheet, ?string $fileName = null, string $viewMode = self::ATTACHMENT_DOWNLOAD): Response
     {
         $targetFile = $fileName ? $fileName : $this->getFileName();
         $writer = new Xlsx($spreadsheet);
-        $tempFile = tempnam(sys_get_temp_dir(), $targetFile);
+        $tempFile = tempnam(sys_get_temp_dir(), 'kmj-export');
         $writer->save($tempFile);
         
         $response = new BinaryFileResponse($tempFile);
-        $response->setContentDisposition(self::ATTACHMENT_DOWNLOAD, $targetFile);
+        $response->deleteFileAfterSend(true);
+        $response->setContentDisposition(self::ATTACHMENT_VIEW === $viewMode ? self::ATTACHMENT_VIEW : self::ATTACHMENT_DOWNLOAD, $targetFile);
         $response->headers->set('Content-Type', $this->getFileType());
         
         return $response;

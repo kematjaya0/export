@@ -87,7 +87,7 @@ abstract class AbstractPaper implements PaperInterface
     {
         $this->marginValidate($name);
         
-        return $this->margins[$name];
+        return $this->margins[$name] ?? null;
     }
     
     /**

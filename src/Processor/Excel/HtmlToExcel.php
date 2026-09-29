@@ -9,7 +9,7 @@
 namespace Kematjaya\Export\Processor\Excel;
 
 use Kematjaya\Export\Exception\ViewModeNotSupported;
-use Kematjaya\Export\Processor\Excel\ExcelProcessor;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class for process from string to spreadsheet document, base on Ticketpark\HtmlPhpExcel\HtmlPhpExcel
@@ -18,7 +18,7 @@ class HtmlToExcel extends ExcelProcessor
 {
     const ATTACHMENT_SAVE_TO_DIR = 'save_to_dir';
     
-    public function __construct(string $fileName = null)
+    public function __construct(?string $fileName = null)
     {
         parent::__construct($fileName);
     }
@@ -44,9 +44,10 @@ class HtmlToExcel extends ExcelProcessor
      * 
      * @param  string  $data
      * @param  string $viewMode
+     * @return \Symfony\Component\HttpFoundation\Response|string response, atau path file untuk ATTACHMENT_SAVE_TO_DIR
      * @throws ViewModeNotSupported when view mode not supported
      */
-    public function render($data, string $viewMode, callable $callable = null)
+    public function render($data, string $viewMode, ?callable $callable = null)
     {
         $excel = new \Ticketpark\HtmlPhpExcel\HtmlPhpExcel($data);
         if ($callable) {
@@ -54,11 +55,25 @@ class HtmlToExcel extends ExcelProcessor
             call_user_func($callable, $this, $data, $viewMode);
         }
         
+        // save(string) tersedia di htmlphpexcel 1.x (PhpSpreadsheet) dan 2.x (FastExcelWriter)
         switch ($viewMode) {
         case self::ATTACHMENT_SAVE_TO_DIR:
-            return $excel->process()->save();
+            $excel->process()->save($this->getFileName());
+            
+            return $this->getFileName();
         case self::ATTACHMENT_DOWNLOAD:
-            return $excel->process()->output($this->getFileName());
+        case self::ATTACHMENT_VIEW:
+            $baseFile = tempnam(sys_get_temp_dir(), 'kmj-export');
+            $tempFile = $baseFile . '.xlsx';
+            $excel->process()->save($tempFile);
+            unlink($baseFile);
+            
+            $response = new BinaryFileResponse($tempFile);
+            $response->deleteFileAfterSend(true);
+            $response->setContentDisposition($viewMode, $this->getFileName());
+            $response->headers->set('Content-Type', $this->getFileType());
+            
+            return $response;
         }
         
         throw new ViewModeNotSupported($viewMode);
