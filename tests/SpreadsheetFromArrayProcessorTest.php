@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SpreadsheetFromArrayProcessorTest extends TestCase
 {
-    public function testRenderWithoutFileName()
+    public function testRenderWithoutFileName(): void
     {
         $processor = (new SpreadsheetFromArrayProcessor())->setStartCell('B2');
         $response = (new ExportManager())->render([['a', 'b'], ['c', 'd']], $processor);
@@ -28,10 +28,10 @@ class SpreadsheetFromArrayProcessorTest extends TestCase
         $this->assertFileDoesNotExist($file);
     }
 
-    public function testCallable()
+    public function testCallable(): void
     {
         $processor = new SpreadsheetFromArrayProcessor('data.xlsx');
-        $response = $processor->render([['a']], SpreadsheetFromArrayProcessor::ATTACHMENT_DOWNLOAD, function ($processor, $data, $viewMode, $spreadsheet) {
+        $response = $processor->render([['a']], SpreadsheetFromArrayProcessor::ATTACHMENT_DOWNLOAD, function ($processor, $data, $viewMode, $spreadsheet): void {
             $spreadsheet->getActiveSheet()->setCellValue('A2', 'footer');
         });
 

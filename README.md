@@ -41,6 +41,6 @@ $excel = $manager->render($data, new SpreadsheetFromArrayProcessor('data.xlsx'))
 
 ## Test
 ```
-sh docker/test.sh all
-EXTRA_REQUIRE="phpoffice/phpspreadsheet:^1.29 ticketpark/htmlphpexcel:^1.1" sh docker/test.sh 8.1 6.4
+sh ../test.sh export all
+EXTRA_REQUIRE="phpoffice/phpspreadsheet:^1.29 ticketpark/htmlphpexcel:^1.1" sh ../test.sh export 8.1 6.4
 ```

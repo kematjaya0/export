@@ -2,7 +2,6 @@
 
 namespace Kematjaya\Export\Processor\Excel;
 
-use Kematjaya\Export\Processor\Excel\ExcelProcessor;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -13,55 +12,38 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class PHPSpreadsheetProcessor extends ExcelProcessor
 {
-    
-    /**
-     *
-     * @var string
-     */
-    private $startCell = 'A1';
-    
+    private string $startCell = 'A1';
+
     /**
      * Set start cell reading data
-     * 
-     * @param  string $startCell
-     * @return self
      */
-    public function setStartCell(string $startCell):self
+    public function setStartCell(string $startCell): self
     {
         $this->startCell = $startCell;
-        
+
         return $this;
     }
-    
-    /**
-     * 
-     * @return string|null
-     */
-    public function getStartCell():?string
+
+    public function getStartCell(): ?string
     {
         return $this->startCell;
     }
-    
+
     /**
      * Writing spreadsheet object to temporary file and return respose object
-     * 
-     * @param  Spreadsheet $spreadsheet
-     * @param  string      $fileName
-     * @param  string      $viewMode
-     * @return Response
      */
     protected function buildWriter(Spreadsheet $spreadsheet, ?string $fileName = null, string $viewMode = self::ATTACHMENT_DOWNLOAD): Response
     {
-        $targetFile = $fileName ? $fileName : $this->getFileName();
+        $targetFile = $fileName ?: $this->getFileName();
         $writer = new Xlsx($spreadsheet);
         $tempFile = tempnam(sys_get_temp_dir(), 'kmj-export');
         $writer->save($tempFile);
-        
+
         $response = new BinaryFileResponse($tempFile);
         $response->deleteFileAfterSend(true);
         $response->setContentDisposition(self::ATTACHMENT_VIEW === $viewMode ? self::ATTACHMENT_VIEW : self::ATTACHMENT_DOWNLOAD, $targetFile);
         $response->headers->set('Content-Type', $this->getFileType());
-        
+
         return $response;
     }
 }

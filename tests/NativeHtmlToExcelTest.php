@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class NativeHtmlToExcelTest extends TestCase
 {
-    public function testRenderTablesOnly()
+    public function testRenderTablesOnly(): void
     {
         $html = '<h1>judul</h1><table><tr><td>1</td></tr></table><p>x</p><table><tr><td>2</td></tr></table>';
         $response = (new NativeHtmlToExcel())->render($html, NativeHtmlToExcel::ATTACHMENT_DOWNLOAD);

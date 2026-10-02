@@ -9,7 +9,6 @@ use SplFileInfo;
  */
 interface FileNormalizerInterface
 {
-    
-    public function normalize(SplFileInfo $object):string;
-    
+    public function normalize(SplFileInfo $object): string;
+
 }

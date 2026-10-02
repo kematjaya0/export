@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileNormalizerTest extends TestCase
 {
-    public function testNormalizeImageToDataUri()
+    public function testNormalizeImageToDataUri(): void
     {
         $file = sys_get_temp_dir() . '/kmj-pixel-' . uniqid() . '.png';
         file_put_contents($file, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='));

@@ -10,51 +10,35 @@ namespace Kematjaya\Export\Processor;
 abstract class AbstractProcessor implements ProcessorInterface
 {
     /**
-     * 
-     * @var string
-     */
-    protected $fileName;
-    
-    /**
      * Constructor
-     * 
-     * @param string $fileName
      */
-    public function __construct(?string $fileName = null) 
-    {
-        $this->fileName = $fileName;
-    }
-    
+    public function __construct(protected ?string $fileName = null) {}
+
     /**
      * Set output filename
-     * 
-     * @param  string $fileName
-     * @return AbstractProcessor
      */
-    public function setFileName(string $fileName):self
+    public function setFileName(string $fileName): self
     {
         $this->fileName = $fileName;
-        
+
         return $this;
     }
-    
+
     /**
      * Get output filename
-     * 
-     * @return string|null
      */
-    public function getFileName():?string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
-    
+
     /**
      * Get output file type
      */
-    abstract public function getFileType():string;
-    
+    abstract public function getFileType(): string;
+
     /**
      * Check supported data
      */
-    abstract function isSupported($data):bool;
+    abstract public function isSupported(mixed $data): bool;
 }

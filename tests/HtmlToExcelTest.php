@@ -16,16 +16,16 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class HtmlToExcelTest extends TestCase
 {
-    const HTML = '<table><tr><th>No</th><th>Nama</th></tr><tr><td>1</td><td>Budi</td></tr></table>';
+    public const HTML = '<table><tr><th>No</th><th>Nama</th></tr><tr><td>1</td><td>Budi</td></tr></table>';
 
-    public function testException()
+    public function testException(): void
     {
         $excel = new HtmlToExcel();
         $this->assertFalse($excel->isSupported([]));
         $this->assertTrue($excel->isSupported(self::HTML));
     }
 
-    public function testDownload()
+    public function testDownload(): void
     {
         $processor = new HtmlToExcel('laporan.xlsx');
         $response = (new ExportManager())->render(self::HTML, $processor);
@@ -39,14 +39,14 @@ class HtmlToExcelTest extends TestCase
         $this->assertEquals('Budi', $sheet->getCell('B2')->getValue());
     }
 
-    public function testViewModeInline()
+    public function testViewModeInline(): void
     {
         $response = (new HtmlToExcel())->render(self::HTML, HtmlToExcel::ATTACHMENT_VIEW);
 
         $this->assertStringContainsString('inline; filename=export.xlsx', $response->headers->get('content-disposition'));
     }
 
-    public function testSaveToDir()
+    public function testSaveToDir(): void
     {
         $target = sys_get_temp_dir() . '/kmj-export-' . uniqid() . '.xlsx';
         $result = (new HtmlToExcel($target))->render(self::HTML, HtmlToExcel::ATTACHMENT_SAVE_TO_DIR);
@@ -56,7 +56,7 @@ class HtmlToExcelTest extends TestCase
         unlink($target);
     }
 
-    public function testViewModeNotSupported()
+    public function testViewModeNotSupported(): void
     {
         $this->expectException(ViewModeNotSupported::class);
         (new HtmlToExcel())->render(self::HTML, 'unknown');

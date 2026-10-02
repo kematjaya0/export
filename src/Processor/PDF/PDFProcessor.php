@@ -2,9 +2,9 @@
 
 namespace Kematjaya\Export\Processor\PDF;
 
-use Kematjaya\Export\Processor\AbstractProcessor;
 use Kematjaya\Export\Paper\ClientPaperInterface;
 use Kematjaya\Export\Paper\PaperInterface;
+use Kematjaya\Export\Processor\AbstractProcessor;
 
 /**
  * Base Class for render PDF Document
@@ -13,40 +13,28 @@ use Kematjaya\Export\Paper\PaperInterface;
  */
 abstract class PDFProcessor extends AbstractProcessor implements ClientPaperInterface
 {
-
-    /**
-     * 
-     * @var PaperInterface
-     */
-    private $paper;
+    private ?PaperInterface $paper = null;
 
     /**
      * Get paper object
-     * 
-     * @return PaperInterface|null
      */
-    function getPaper(): ?PaperInterface 
+    public function getPaper(): ?PaperInterface
     {
         return $this->paper;
     }
 
     /**
      * Set Paper object
-     * 
-     * @param  PaperInterface $paper
-     * @return ClientPaperInterface
      */
-    function setPaper(PaperInterface $paper): ClientPaperInterface 
+    public function setPaper(PaperInterface $paper): ClientPaperInterface
     {
         $this->paper = $paper;
-        
+
         return $this;
     }
 
     /**
      * Get mime type
-     * 
-     * @return string
      */
     public function getFileType(): string
     {

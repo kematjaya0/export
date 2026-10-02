@@ -9,12 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 class DOMPDFProcessorTest extends TestCase
 {
-    public function testRenderResponse()
+    public function testRenderResponse(): void
     {
         $paper = (new Paper())->setPaperType('A5')->setOrientation(Paper::ORIENTATION_LANDSCAPE);
         $processor = new DOMPDFProcessor('laporan.pdf');
         $usedPaper = null;
-        $response = (new ExportManager())->render('<h1>test</h1>', $processor, DOMPDFProcessor::ATTACHMENT_VIEW, $paper, function ($processor, $content, $pdf, $paper) use (&$usedPaper) {
+        $response = (new ExportManager())->render('<h1>test</h1>', $processor, DOMPDFProcessor::ATTACHMENT_VIEW, $paper, function ($processor, $content, $pdf, $paper) use (&$usedPaper): void {
             $usedPaper = $paper;
         });
 
@@ -24,7 +24,7 @@ class DOMPDFProcessorTest extends TestCase
         $this->assertEquals('inline;filename="laporan.pdf"', $response->headers->get('content-disposition'));
     }
 
-    public function testResponseWithoutFileName()
+    public function testResponseWithoutFileName(): void
     {
         $response = (new ExportManager())->render('<h1>test</h1>', new DOMPDFProcessor(), DOMPDFProcessor::ATTACHMENT_DOWNLOAD);
 
