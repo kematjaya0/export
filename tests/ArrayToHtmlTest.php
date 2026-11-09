@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
  */
 class ArrayToHtmlTest extends TestCase
 {
-    public function testInsertData()
+    public function testInsertData(): void
     {
         $processor = new ArrayToHtml();
         $this->assertFalse($processor->isSupported('test'));
-        
+
         $data = [
             [
                 'No' => 1,
@@ -39,32 +39,72 @@ class ArrayToHtmlTest extends TestCase
                 'Alamat' => 'sby',
             ],
         ];
-        
+
         $this->assertTrue($processor->isSupported($data));
         $content = $processor->render($data, ArrayToHtml::ATTACHMENT_DOWNLOAD);
         $this->assertIsString($content);
     }
-    
-    public function testFormatNotSupported()
+
+    public function testFormatNotSupported(): void
     {
         $processor = new ArrayToHtml();
         $manager = new ExportManager();
-        
+
         $this->expectException(FormatNotSupported::class);
         $manager->render('test', $processor);
     }
-    
-    public function testExportExcel()
+
+    public function testExportExcel(): void
     {
         $processor = new ArrayToHtml();
         $manager = new ExportManager();
         $data = [
             ['1233', 'test 1'],
-            ['1234', 'test 2']
+            ['1234', 'test 2'],
         ];
-        
+
         $result = $manager->render($data, $processor);
         $this->assertEquals($processor->getFileType(), $result->headers->get('content-type'));
         $this->assertIsString($result->getContent());
+    }
+
+    public function testRenderNonStringValues(): void
+    {
+        $data = [
+            ['nama' => 'a <b>', 'tanggal' => new \DateTime('2024-01-02 03:04:05'), 'aktif' => true, 'catatan' => null, 'tag' => ['x', 'y'], 'obj' => new \stdClass()],
+        ];
+
+        $content = new ArrayToHtml()->render($data, ArrayToHtml::ATTACHMENT_VIEW);
+
+        $this->assertStringContainsString('<td>a &lt;b&gt;</td>', $content);
+        $this->assertStringContainsString('<td>2024-01-02 03:04:05</td>', $content);
+        $this->assertStringContainsString('<td>1</td><td></td><td>x, y</td>', $content);
+        $this->assertStringContainsString('<th style="text-align:center">tanggal</th>', $content);
+    }
+
+    public function testRenderEmpty(): void
+    {
+        $content = new ArrayToHtml()->render([], ArrayToHtml::ATTACHMENT_VIEW);
+
+        $this->assertStringContainsString('<thead>  </thead>', $content);
+    }
+
+    public function testRenderAssociativeRows(): void
+    {
+        $content = new ArrayToHtml()->render(['first' => ['a' => 1], 'second' => ['a' => 2]], ArrayToHtml::ATTACHMENT_VIEW);
+
+        $this->assertStringContainsString('<th style="text-align:center">a</th>', $content);
+        $this->assertStringContainsString('<tr><td>2</td></tr>', $content);
+    }
+
+    public function testCallable(): void
+    {
+        $called = false;
+        $processor = new ArrayToHtml();
+        $processor->render([['a' => 1]], ArrayToHtml::ATTACHMENT_VIEW, function () use (&$called): void {
+            $called = true;
+        });
+
+        $this->assertTrue($called);
     }
 }
