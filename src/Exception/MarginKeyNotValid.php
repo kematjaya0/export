@@ -15,7 +15,7 @@ use Exception;
  */
 class MarginKeyNotValid extends Exception
 {
-    public function __construct(string $name) 
+    public function __construct(string $name)
     {
         $message = sprintf("key %s not exist for margin", $name);
         parent::__construct($message);

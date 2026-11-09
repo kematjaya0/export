@@ -8,31 +8,28 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Class for normalizer file to base64 format
- * 
+ *
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
 class FileNormalizer implements FileNormalizerInterface
 {
-    private NormalizerInterface $normalizer;
-    
-    
+    private readonly NormalizerInterface $normalizer;
+
+
     /**
      * __construct()
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->normalizer = new DataUriNormalizer();
     }
-    
+
     /**
-     * normalizer file and return string base64 
-     * 
-     * @param  SplFileInfo $object
-     * @return string
+     * normalizer file and return string base64
      */
-    public function normalize(SplFileInfo $object):string
+    public function normalize(SplFileInfo $object): string
     {
         return $this->normalizer->normalize($object);
     }
-    
+
 }

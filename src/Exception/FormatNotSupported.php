@@ -10,7 +10,7 @@ class FormatNotSupported extends \Exception
     public function __construct(string $message = "", int $code = 0, ?\Throwable $previous = null)
     {
         $message = sprintf("format not supported: %s", $message);
-        
+
         parent::__construct($message, $code, $previous);
     }
 }

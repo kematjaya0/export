@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class ArrayToHtmlProcessor
  *
@@ -20,7 +21,7 @@ abstract class ArrayToHtmlProcessor extends AbstractProcessor
      *
      * @return string String of output type
      */
-    public function getFileType(): string 
+    public function getFileType(): string
     {
         return 'text/html';
     }
