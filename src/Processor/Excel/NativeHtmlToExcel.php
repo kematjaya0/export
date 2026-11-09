@@ -2,9 +2,9 @@
 
 namespace Kematjaya\Export\Processor\Excel;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @package Kematjaya\Export\Processor\Excel
@@ -13,41 +13,37 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
  */
 class NativeHtmlToExcel extends ExcelProcessor
 {
-    
     public function isSupported($data): bool
     {
         return is_string($data);
     }
 
-    public function render(mixed $data, string $viewMode, ?callable $callable = null)
+    public function render(mixed $data, string $viewMode, ?callable $callable = null): Response
     {
         $excel = $this->createTableHTML($data);
         if ($callable) {
-            
+
             call_user_func($callable, $this, $data, $viewMode);
         }
-        
+
         return $this->createResponse($excel, $viewMode);
     }
 
-    protected function createTableHTML(string $data)
+    protected function createTableHTML(string $data): string
     {
         $crawler = new Crawler($data);
-        $html = $crawler->filter('table')->each(function (Crawler $dom){
-            
-            return sprintf('<table border="1">%s</table>', $dom->html());
-        });
+        $html = $crawler->filter('table')->each(fn (Crawler $dom): string => sprintf('<table border="1">%s</table>', $dom->html()));
         $separator = '<table><tr><td></td></tr></table><table><tr><td></td></tr></table><table><tr><td></td></tr></table>';
-        
+
         return implode($separator, $html);
     }
-    
+
     protected function createResponse(string $content, string $viewMode = self::ATTACHMENT_VIEW): Response
     {
         $response = new Response($content);
         $response->headers->set('Content-type', $this->getFileType());
-        $response->headers->set('Content-Disposition', HeaderUtils::makeDisposition($viewMode, $this->getFileName()));
-        
+        $response->headers->set('Content-Disposition', HeaderUtils::makeDisposition($viewMode, $this->getFileName() ?: 'export.xlsx'));
+
         return $response;
     }
 }
