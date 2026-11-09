@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \$report of method Kematjaya\\Export\\Processor\\Excel\\KoolReportToExcel\:\:renderHTML\(\) has invalid type koolreport\\KoolReport\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Processor/Excel/KoolReportToExcel.php
